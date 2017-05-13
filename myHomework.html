@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+</style>
+<meta charset="UTF-8">
+<title>密碼產生工具</title>
+<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet" >
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<script src="js/jquery.js"></script>
+<script src="js/seedrandom.js"></script>
+
+<style>
+#randomTable {
+    font-family: monospace;
+    font-size: 1em;
+    font-weight:bold;
+    }
+
+body {
+    background-image: url(photo/background.jpg);
+     background-size: cover;
+}
+
+body {
+    font-family:Microsoft JhengHei;
+}
+    
+
+</style>
+
+</head>
+
+
+<body>
+<br>
+
+
+<div class="container">
+        
+<!--下拉選單--> 
+<div class="row content">
+<div class="col-sm-4">
+<form class="form-inline" >
+    <button type=button class="btn btn-success" >
+        <span class="glyphicon glyphicon-pencil"></span>&nbsp;選擇密碼類型&nbsp;&nbsp;&nbsp;&nbsp;
+        <select class="form-control" id="allSelect">
+            <option class="randomType" id="select1" value="0";>純數字</option>
+            <option class="randomType" id="select2" value="1">數字+小寫字母</option>
+            <option class="randomType" id="select3" value="2">數字+大小寫字母</option>
+        </select>
+    </button >
+</form>
+
+<br>
+
+<!--↓輸入亂數表編號的地方及執行按鈕及密碼誕生的地方-->
+<form class="form-inline" >
+    <div class="form-group" >
+        <input class="form-control" type="text"  id="txtSeed" placeholder="輸入亂數種子ex:123">
+        <input class="btn btn-primary" type="button" id="btnGo" value="產生亂數表">
+    </div>
+</form> 
+</div class="col-sm-4">
+ 
+<div class="col-sm-8">
+    <button class="btn btn-success btn-lg" id="ans">密碼誕生
+        <span class="glyphicon glyphicon-hand-right"></span>
+    </button>
+       
+    <button class="btn btn-success btn-lg" id="passWord">
+        <span class="glyphicon glyphicon-hand-right"></span>
+    </button>
+</div class="col-sm-8">
+
+</div>
+  
+    
+<hr align="left" width="100%">
+
+<!--輸入通關密碼的地方--> 
+<div class="row content">
+    <div class="col-sm-4">
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">輸入<br>4組通關號碼</span>
+            <input type="text" id="Look1" size="20" placeholder="請輸入兩位數字">
+            <input type="text" id="Look2" size="20" placeholder="請輸入兩位數字">
+            <input type="text" id="Look3" size="20" placeholder="請輸入兩位數字">
+            <input type="text" id="Look4" size="20" placeholder="請輸入兩位數字">
+        </div>
+<br>
+<!--亂數表的結果--> 
+        <div class="panel panel-primary" >
+            <div 
+                class="panel-heading"><h3 class="panel-title" >亂數表結果</h3>
+            </div>
+            
+            <div class="panel-headin">
+                <li class="list-group-item" id="randomTable" ></li>
+            </div>
+        </div>
+    </div class="col-sm-4">
+
+<!--↓說明書的部分-->
+    <div class="col-sm-8 text-left"> 
+        <div class="w3-panel w3-pale-blue w3-leftbar  w3-border-blue">
+            <p>
+            <p><center><h2><strong>密碼產生工具&nbsp;&nbsp;操作步驟說明</strong></h2></center><p>
+            <p><h4 style="color:#2808f4"><i>Step1</i></h> </p>
+            <P><h4>選擇密碼類型，下拉選單：純數字、數字+大寫字母、數字+小寫字母</h4></P>
+            <p><h4 style="color:#2808f4"><i>Step2</i></h></P>
+            <P><h4>輸入亂數種子，不同的數字帶出不同的亂數結果，輸入完成點擊"產生亂數表"</h4></P>
+            <p><h4 style="color:#2808f4"><i>Step3</i></h></P>
+            <P><h4>輸入通關號碼，共計四組。每一組帶出一個密碼。</h4></P>
+            <p><h4 style="color:#2808f4"><i>Step4</i></h></P>
+            <P><h4>點擊"密碼誕生"，完成密碼取得。</h4></P>
+            <p align="right"><i>背景圖片來源：https://arstechnica.com/</i></p>
+            </P>
+        </div>
+        
+        <div class="w3-panel w3-pale-blue  w3-rightbar w3-border-blue">
+        <p align="right"><i>Fsit03-Homework&nbsp;&nbsp;By:Weizi&nbsp;&nbsp;Date:2017/05/13</i></p>
+        </div>
+        
+    </div class="col-sm-8 text-left">
+    
+</div class="row content">
+</div class="container">
+
+   
+
+<script>
+$("#btnGo").click(function () {
+var result = "";
+var spool  = "";
+var passWord = "";
+var sPoolA = "0123456789";
+var sPoolB ="abcdefghijkmnpqrstuvwxy0123456789";
+var sPoolC ="ABCDEFGHJKLMNPQRSTUVWXYabcdefghijkmnpqrstuvwxy0123456789";
+
+
+    if( $("#allSelect").val() ==0 )		     	sPool = sPoolA;
+	    else if( $("#allSelect").val() ==1 )	sPool = sPoolB;
+	    else if( $("#allSelect").val() ==2 )	sPool = sPoolC;
+
+
+    Math.seedrandom($("#txtSeed").val()); 
+	var iRandom = 0; var ch = "?";
+	for (iRow = 1; iRow <= 10; iRow++) {
+		var sLine = (iRow +100).toString().substr(1, 2) + ": ";
+		
+		for (iCol = 1; iCol <= 10; iCol++) {
+			iRandom = Math.floor(Math.random() * sPool.length);
+			ch = sPool.substr(iRandom, 1);
+			sLine += ch;
+		}
+		result += sLine + "<br>";
+	}
+	
+	
+	$("#randomTable").html(result);
+	
+
+});
+// 點選通關密語顯示密碼的程式未完成，持續努力中
+// 	$("#ans").click(function() {
+// 	var s = $("#Look1").val();	
+// 	var row = Number(s.substr(0,1));
+// 	var col = Number(s.substr(1,2));
+// 	passWord = "密碼:" (s.substr(1,2));
+	
+// 	$("#passWord").html(passWord);
+	
+// 	});
+
+
+
+</script>
+
+</body>
+</html>
